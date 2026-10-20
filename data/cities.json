@@ -1,0 +1,148 @@
+[
+  {
+    "name": "Paris",
+    "imageUrl": "{{BASE_URL}}/images/paris.jpg",
+    "description": "The French capital is known for art, architecture, food and a walkable riverside.",
+    "plan": [
+      {
+        "day": 1,
+        "day-description": "Iconic landmarks and the Seine.",
+        "activities": [
+          {
+            "activity": "Eiffel Tower",
+            "description": "Go up the tower for views across the whole city.",
+            "imageUrl": "{{BASE_URL}}/images/paris.jpg",
+            "ticketPrice": 30,
+            "distanceToNextActivity": 2.5,
+            "bestTravelOption": "Metro or walk along the river"
+          },
+          {
+            "activity": "Seine River Cruise",
+            "description": "An hour on the water past Notre-Dame and the Louvre.",
+            "imageUrl": "{{BASE_URL}}/images/paris.jpg",
+            "ticketPrice": 15,
+            "distanceToNextActivity": 0,
+            "bestTravelOption": "Walk"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "day-description": "Art in the morning, village streets in the afternoon.",
+        "activities": [
+          {
+            "activity": "Louvre Museum",
+            "description": "See the Mona Lisa and the Greek and Egyptian collections.",
+            "imageUrl": "{{BASE_URL}}/images/paris.jpg",
+            "ticketPrice": 25,
+            "distanceToNextActivity": 6,
+            "bestTravelOption": "Metro"
+          },
+          {
+            "activity": "Sacré-Cœur and Montmartre",
+            "description": "Climb to the basilica and wander the artists' square.",
+            "imageUrl": "{{BASE_URL}}/images/paris.jpg",
+            "ticketPrice": 0,
+            "distanceToNextActivity": 0,
+            "bestTravelOption": "Walk"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "day-description": "A royal palace and a grand finale.",
+        "activities": [
+          {
+            "activity": "Palace of Versailles",
+            "description": "Tour the palace, the Hall of Mirrors and the gardens.",
+            "imageUrl": "{{BASE_URL}}/images/paris.jpg",
+            "ticketPrice": 25,
+            "distanceToNextActivity": 20,
+            "bestTravelOption": "RER C train"
+          },
+          {
+            "activity": "Arc de Triomphe",
+            "description": "Watch the sun set over the Champs-Élysées from the rooftop.",
+            "imageUrl": "{{BASE_URL}}/images/paris.jpg",
+            "ticketPrice": 15,
+            "distanceToNextActivity": 0,
+            "bestTravelOption": "Metro"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Hong Kong",
+    "imageUrl": "{{BASE_URL}}/images/hongkong.jpg",
+    "description": "A dense, vertical city where skyscrapers meet mountains, markets and harbour views.",
+    "plan": [
+      {
+        "day": 1,
+        "day-description": "The harbour and the best view in the city.",
+        "activities": [
+          {
+            "activity": "Victoria Peak",
+            "description": "Ride the Peak Tram up for the classic skyline view.",
+            "imageUrl": "{{BASE_URL}}/images/hongkong.jpg",
+            "ticketPrice": 12,
+            "distanceToNextActivity": 7,
+            "bestTravelOption": "Peak Tram"
+          },
+          {
+            "activity": "Star Ferry",
+            "description": "Cross Victoria Harbour on the historic green-and-white ferry.",
+            "imageUrl": "{{BASE_URL}}/images/hongkong.jpg",
+            "ticketPrice": 1,
+            "distanceToNextActivity": 0,
+            "bestTravelOption": "Walk"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "day-description": "Temples and night markets.",
+        "activities": [
+          {
+            "activity": "Tian Tan Buddha",
+            "description": "Take the cable car to Lantau Island and the giant bronze Buddha.",
+            "imageUrl": "{{BASE_URL}}/images/hongkong.jpg",
+            "ticketPrice": 25,
+            "distanceToNextActivity": 25,
+            "bestTravelOption": "MTR and cable car"
+          },
+          {
+            "activity": "Temple Street Night Market",
+            "description": "Street food, souvenirs and fortune tellers after dark.",
+            "imageUrl": "{{BASE_URL}}/images/hongkong.jpg",
+            "ticketPrice": 0,
+            "distanceToNextActivity": 0,
+            "bestTravelOption": "MTR"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "day-description": "Local history and a dim sum lunch.",
+        "activities": [
+          {
+            "activity": "Hong Kong Museum of History",
+            "description": "Walk through 6,000 years of the region's history.",
+            "imageUrl": "{{BASE_URL}}/images/hongkong.jpg",
+            "ticketPrice": 1,
+            "distanceToNextActivity": 3,
+            "bestTravelOption": "MTR"
+          },
+          {
+            "activity": "Traditional dim sum lunch",
+            "description": "Share steamed dumplings and tea at a local teahouse.",
+            "imageUrl": "{{BASE_URL}}/images/hongkong.jpg",
+            "ticketPrice": 10,
+            "distanceToNextActivity": 0,
+            "bestTravelOption": "Walk"
+          }
+        ]
+      }
+    ]
+  }
+]
