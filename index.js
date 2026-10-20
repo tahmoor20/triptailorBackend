@@ -1,68 +1,36 @@
-const express = require('express');
+'use strict';
+
+require('dotenv').config();
+
 const { MongoClient } = require('mongodb');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const path = require('path'); 
+const { loadConfig, assertRequired } = require('./src/config');
+const { createApp } = require('./src/app');
 
-dotenv.config();
+async function main() {
+  const config = loadConfig();
+  assertRequired(config);
 
-const app = express(); 
-const PORT = process.env.PORT || 5000; 
+  const client = new MongoClient(config.mongoUri);
+  await client.connect();
+  console.log('Connected to MongoDB Atlas');
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+  const db = client.db(config.dbName);
+  const app = createApp({ db, config, openai: null });
 
-// Static files serve karein
-app.use('/images', express.static(path.join(__dirname, 'images')));
+  const server = app.listen(config.port, () => {
+    console.log(`Server is running on port ${config.port}`);
+  });
 
-// MongoDB Connection
-const uri = process.env.MONGO_URI;
-const client = new MongoClient(uri);
-
-async function connect() {
-    try {
-        await client.connect();
-        console.log('Connected to MongoDB Atlas');
-    } catch (err) {
-        console.error('Error connecting to MongoDB Atlas:', err);
-    }
+  const shutdown = async () => {
+    server.close();
+    await client.close();
+    process.exit(0);
+  };
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
 }
 
-connect();
-
-// Routes
-app.get('/', (req, res) => {
-    res.send('Trip Tailor Backend is running!');
-});
-
-// Cities Route
-app.get('/api/cities', async (req, res) => {
-    try {
-        const db = client.db('triptailor');
-        const citiesCollection = db.collection('cities');
-        const cities = await citiesCollection.find({}).toArray();
-        res.json(cities);
-    } catch (err) {
-        console.error('Error fetching cities:', err);
-        res.status(500).json({ message: err.message });
-    }
-});
-
-app.post('/api/cities', async (req, res) => {
-    try {
-        const db = client.db('triptailor');
-        const citiesCollection = db.collection('cities');
-        const newCity = req.body;
-        const result = await citiesCollection.insertOne(newCity);
-        res.status(201).json(result);
-    } catch (err) {
-        console.error('Error inserting city:', err);
-        res.status(500).json({ message: err.message });
-    }
-});
-
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+main().catch((err) => {
+  console.error('Failed to start server:', err.message);
+  process.exit(1);
 });
