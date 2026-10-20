@@ -93,3 +93,25 @@ describe('POST /api/cities', () => {
     expect(res.body.message).toBe('City name is required');
   });
 });
+
+describe('GET /api/formcities/random', () => {
+  it('returns a limited set of cities with only the form fields', async () => {
+    const { app, db } = createTestApp();
+    for (let i = 1; i <= 8; i += 1) {
+      await db.collection('cities').insertOne({
+        name: `City ${i}`,
+        imageUrl: `c${i}.jpg`,
+        description: `About city ${i}`,
+        plan: [{ day: 1, activities: [] }],
+      });
+    }
+
+    const res = await request(app).get('/api/formcities/random');
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(6);
+    res.body.forEach((city) => {
+      expect(Object.keys(city).sort()).toEqual(['_id', 'description', 'imageUrl', 'name']);
+    });
+  });
+});
