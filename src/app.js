@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const { createAuthRouter } = require('./routes/auth');
 const { createCitiesRouter } = require('./routes/cities');
+const { createUserRouter } = require('./routes/user');
 const { createLimiter } = require('./middleware/rateLimit');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
@@ -23,6 +24,8 @@ function createApp({ db, config, openai }) {
 
   // Static city images
   app.use('/images', express.static(path.join(__dirname, '..', 'images')));
+  // Profile pictures uploaded by users
+  app.use('/uploads', express.static(path.resolve(config.uploadDir)));
 
   app.get('/', (req, res) => {
     res.send('Trip Tailor Backend is running!');
@@ -34,6 +37,7 @@ function createApp({ db, config, openai }) {
   app.use('/api/signup', authLimiter);
 
   app.use('/api', createAuthRouter({ db, config }));
+  app.use('/api', createUserRouter({ db, config }));
   app.use('/api', createCitiesRouter({ db, config, openai }));
 
   app.use(notFound);
