@@ -6,6 +6,7 @@ const cors = require('cors');
 const { createAuthRouter } = require('./routes/auth');
 const { createCitiesRouter } = require('./routes/cities');
 const { createUserRouter } = require('./routes/user');
+const { createItineraryRouter } = require('./routes/itinerary');
 const { createLimiter } = require('./middleware/rateLimit');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
@@ -38,7 +39,8 @@ function createApp({ db, config, openai }) {
 
   app.use('/api', createAuthRouter({ db, config }));
   app.use('/api', createUserRouter({ db, config }));
-  app.use('/api', createCitiesRouter({ db, config, openai }));
+  app.use('/api', createItineraryRouter({ config, openai }));
+  app.use('/api', createCitiesRouter({ db, config }));
 
   app.use(notFound);
   app.use(errorHandler);
