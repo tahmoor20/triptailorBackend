@@ -4,7 +4,8 @@
 // so they show up on the workflow run and on pull requests.
 const fs = require('fs');
 
-const ANSI = /\u001b\[[0-9;]*m/g;
+// Terminal colour codes that Jest adds to its messages (ESC [ ... m).
+const ANSI = new RegExp(String.fromCharCode(27) + '\\[[0-9;]*m', 'g');
 const clean = (text) => String(text).replace(ANSI, '').replace(/\s+/g, ' ').trim().slice(0, 900);
 const escapeProperty = (text) => String(text).replace(/[%\r\n:,]/g, ' ');
 
