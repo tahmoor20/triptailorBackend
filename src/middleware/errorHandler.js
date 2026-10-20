@@ -1,5 +1,7 @@
 'use strict';
 
+const { HttpError } = require('../utils/httpError');
+
 function notFound(req, res) {
   res.status(404).json({ message: `Route not found: ${req.method} ${req.originalUrl}` });
 }
@@ -20,8 +22,10 @@ function errorHandler(err, req, res, next) {
     console.error(err);
   }
 
-  // Never leak internal error details to clients.
-  const message = status >= 500 ? 'Internal server error' : err.message;
+  // Messages from HttpError are written for clients, so they are always safe to show.
+  // Anything else that fails with a 5xx is unexpected: never leak its details.
+  const isSafeToShow = err instanceof HttpError || status < 500;
+  const message = isSafeToShow ? err.message : 'Internal server error';
   return res.status(status).json({ message });
 }
 

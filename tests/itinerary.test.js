@@ -69,6 +69,7 @@ describe('POST /api/generate-itinerary', () => {
     const res = await request(app).post('/api/generate-itinerary').send(validRequest);
 
     expect(res.status).toBe(503);
+    expect(res.body.message).toBe('Itinerary generation is not configured on this server');
   });
 
   it('answers 502 when the OpenAI request fails', async () => {
