@@ -21,7 +21,7 @@ function requireAuth(config) {
     try {
       req.userId = jwt.verify(token, config.jwtSecret).sub;
       return next();
-    } catch (err) {
+    } catch {
       return next(new HttpError(401, 'Invalid or expired token'));
     }
   };
