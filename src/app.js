@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const { createCitiesRouter } = require('./routes/cities');
+const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 /**
  * Build the Express app. The database, config and OpenAI client are injected,
@@ -23,6 +24,9 @@ function createApp({ db, config, openai }) {
   });
 
   app.use('/api', createCitiesRouter({ db, config, openai }));
+
+  app.use(notFound);
+  app.use(errorHandler);
 
   return app;
 }
