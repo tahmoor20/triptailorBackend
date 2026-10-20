@@ -5,6 +5,8 @@ const asyncHandler = require('../utils/asyncHandler');
 const { HttpError } = require('../utils/httpError');
 const { requireAuth } = require('../middleware/auth');
 
+const RANDOM_CITY_COUNT = 6;
+
 function createCitiesRouter({ db, config }) {
   const router = express.Router();
   const cities = () => db.collection('cities');
@@ -14,6 +16,20 @@ function createCitiesRouter({ db, config }) {
     '/cities',
     asyncHandler(async (req, res) => {
       res.json(await cities().find({}).toArray());
+    })
+  );
+
+  // A few random cities to suggest in the itinerary form.
+  router.get(
+    '/formcities/random',
+    asyncHandler(async (req, res) => {
+      const sample = await cities()
+        .aggregate([
+          { $sample: { size: RANDOM_CITY_COUNT } },
+          { $project: { name: 1, imageUrl: 1, description: 1 } },
+        ])
+        .toArray();
+      res.json(sample);
     })
   );
 
