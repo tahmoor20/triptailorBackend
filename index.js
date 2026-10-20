@@ -15,6 +15,9 @@ async function main() {
   console.log('Connected to MongoDB Atlas');
 
   const db = client.db(config.dbName);
+  // One account per email address.
+  await db.collection('users').createIndex({ email: 1 }, { unique: true });
+
   const app = createApp({ db, config, openai: null });
 
   const server = app.listen(config.port, () => {
