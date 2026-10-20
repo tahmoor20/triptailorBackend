@@ -3,6 +3,7 @@
 require('dotenv').config();
 
 const { MongoClient } = require('mongodb');
+const OpenAI = require('openai');
 const { loadConfig, assertRequired } = require('./src/config');
 const { createApp } = require('./src/app');
 
@@ -18,7 +19,12 @@ async function main() {
   // One account per email address.
   await db.collection('users').createIndex({ email: 1 }, { unique: true });
 
-  const app = createApp({ db, config, openai: null });
+  const openai = config.openaiApiKey ? new OpenAI({ apiKey: config.openaiApiKey }) : null;
+  if (!openai) {
+    console.warn('OPENAI_API_KEY is not set: POST /api/generate-itinerary is disabled');
+  }
+
+  const app = createApp({ db, config, openai });
 
   const server = app.listen(config.port, () => {
     console.log(`Server is running on port ${config.port}`);
