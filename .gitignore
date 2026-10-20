@@ -6,3 +6,4 @@ node_modules
 # user uploads and test output
 uploads/
 coverage/
+jest-results.json
